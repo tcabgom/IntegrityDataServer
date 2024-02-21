@@ -6,6 +6,7 @@ class Server:
         self.host = host
         self.port = port
         self.server_socket = None
+        self.km = 0
 
     def start(self):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -30,9 +31,11 @@ class Server:
 
                 received_message = data.decode()
                 print(f"Received message from {client_socket.getpeername()}: {received_message}")
+                self.km += int(data)
 
                 # Responder al cliente
-                response_message = "Server received your message: " + received_message
+                response_message = "Server received your message: " + received_message + " - " + str(self.km)
+                print()
                 client_socket.sendall(response_message.encode())
         except Exception as e:
             print(f"Error handling client: {e}")
