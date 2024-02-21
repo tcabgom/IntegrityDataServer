@@ -1,4 +1,6 @@
-from src.main.python.client import Client
+import threading
+
+from src.main.python.load_test import LoadTest
 from src.main.python.server import Server
 
 if __name__ == "__main__":
@@ -6,12 +8,20 @@ if __name__ == "__main__":
     PORT = 12345  # Server listening port
 
     server = Server(HOST, PORT)
-    client = Client(HOST, PORT)
 
     # Start the server in a separate thread
-    import threading
     server_thread = threading.Thread(target=server.start)
     server_thread.start()
 
-    # Connect the client to the server
-    client.connect()
+    # Simulate load with LoadTest
+    load_test = LoadTest(HOST, PORT)
+    message = "Hello, server!"
+    num_clients = 100000000
+
+    # Start client simulation in a separate thread
+    load_test_thread = threading.Thread(target=load_test.client_simulation, args=(message, num_clients))
+    load_test_thread.start()
+
+    # Wait for both threads to finish
+    server_thread.join()
+    load_test_thread.join()
