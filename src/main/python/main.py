@@ -15,8 +15,8 @@ if __name__ == "__main__":
 
     # Simulate load with LoadTest
     load_test = LoadTest(HOST, PORT)
-    message = "Hello, server!"
-    num_clients = 100000000
+    message = "100"
+    num_clients = 10
 
     # Start client simulation in a separate thread
     load_test_thread = threading.Thread(target=load_test.client_simulation, args=(message, num_clients))
