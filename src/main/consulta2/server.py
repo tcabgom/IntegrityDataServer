@@ -45,7 +45,7 @@ async def handler(websocket, path):
         refusal_message = "Conexión rechazada: error en el servidor"
         await websocket.send(refusal_message)
     finally:
-        # Remueve la conexión de la lista cuando el usuario se desconecta
+        # Elimina la conexión de la lista cuando el usuario se desconecta
         active_connections.remove(websocket)
         print(f"USUARIOS CONECTADOS ACTUALES: {len(active_connections)}")
 
